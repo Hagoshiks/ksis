@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Файловое хранидище. Путь: {{ path }}</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        a { text-decoration: none; color: #0366d6; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Файловое хранидище. Путь: {{ path }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Размер в байтах</th>
+                <th>Последнее изменения</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <a href="{{ item.url }}">
+                        {{ item.name }}{% if item.is_directory %}/{% endif %}
+                    </a>
+                </td>
+                <td>
+                    {% if item.is_directory %}
+                        —
+                    {% else %}
+                        {{ item.size }}
+                    {% endif %}
+                </td>
+                <td>{{ item.last_modified.replace('T', ' ').split('.')[0] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
